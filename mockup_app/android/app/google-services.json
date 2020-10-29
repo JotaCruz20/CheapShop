@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "611658499278",
+    "firebase_url": "https://appmockup-969af.firebaseio.com",
+    "project_id": "appmockup-969af",
+    "storage_bucket": "appmockup-969af.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:611658499278:android:3f8043d56bd5fe88de3c9f",
+        "android_client_info": {
+          "package_name": "com.tut.mockupapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "611658499278-rj21o647kvb096jj1d1flvjgpds0ls8b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB2VdK40Sf1vFN_K1te9V9jZSfe8ukA29I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "611658499278-rj21o647kvb096jj1d1flvjgpds0ls8b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
