@@ -29,20 +29,28 @@ class _ListaAtualState extends State<ListaAtual> {
               onPressed: () async{
                 dynamic result = await Navigator.pushNamed(context, '/list');
                 setState(() {
-                  prodsAtuais.add(result['prod']);
-                  result['prod'].lojaPreco.forEach((key,value){
-                    if(precoTot.containsKey(key)){
-                      precoTot.update(key, (val) => value.toDouble()+val.toDouble());
+                  for(var i=0;i<result['list'].length;i++) {
+                    Produto prod = result['list'][i].getProduto();
+                    prodsAtuais.add(prod);
+                    prod.lojaPreco.forEach((key, value) {
+                      if (precoTot.containsKey(key)) {
+                        precoTot.update(key, (val) =>
+                        value.toDouble() + val.toDouble());
+                      }
+                      else {
+                        precoTot.addAll({ key: value.toDouble()});
+                      }
+                    });
+                    if (precoTot.containsKey(prod.loja)) {
+                      precoTot.update(
+                          prod.loja, (value) => value.toDouble() +
+                          prod.preco.toDouble());
                     }
-                    else{
-                      precoTot.addAll({ key:value.toDouble()});
+                    else {
+                      precoTot.addAll({
+                        prod.loja: prod.preco.toDouble()
+                      });
                     }
-                  });
-                  if(precoTot.containsKey(result['prod'].loja)){
-                    precoTot.update(result['prod'].loja, (value) => value.toDouble()+result['prod'].preco.toDouble());
-                  }
-                  else{
-                    precoTot.addAll({result['prod'].loja:result['prod'].preco.toDouble()});
                   }
                 });
               },

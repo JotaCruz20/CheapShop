@@ -1,4 +1,5 @@
 import 'package:app/models/produto.dart';
+import 'package:app/screens/lista/list_tile.dart';
 import 'package:app/screens/lista/lista.dart';
 import 'package:flutter/material.dart';
 import 'package:app/services/database.dart';
@@ -15,6 +16,7 @@ class _ListaProdsState extends State<ListaProds> {
   @override
 
   Widget build(BuildContext context) {
+    dynamic storeList;
 
     return StreamProvider<List<Produto>>.value(
       value: DatabaseService().prods,
@@ -47,9 +49,17 @@ class _ListaProdsState extends State<ListaProds> {
                 }
               });
             }),
-          ],
+            ],
         ),
-        body: ProdList(),
+        body: storeList=ProdList(),
+        floatingActionButton: FloatingActionButton(
+            child: Icon(Icons.done,color:Colors.white),
+            backgroundColor: Colors.green[400],
+            onPressed:(){
+               Navigator.pop(context,{'list': storeList.getProdsChecked()});
+            }
+        ),
+
       ),
     );
   }

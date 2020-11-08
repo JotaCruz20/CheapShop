@@ -4,18 +4,26 @@ import 'package:app/models/produto.dart';
 class ProdTile extends StatefulWidget {
   final Produto prod;
   final bool inFinalList;
+  bool _check=false;
   ProdTile({this.prod,this.inFinalList});
 
   void atulizarProd(String loja, double preco){
     prod.addLoja(loja, preco);
   }
+
+  bool getCheck(){
+    return _check;
+  }
+
+  Produto getProduto(){
+    return prod;
+  }
+
   @override
   _ProdTile createState() => _ProdTile();
 }
 
 class _ProdTile extends State<ProdTile> {
-
-  bool _check=false;
 
   @override
   Widget build(BuildContext context) {
@@ -31,10 +39,10 @@ class _ProdTile extends State<ProdTile> {
           title: Text(widget.prod.tipo),
           subtitle: Text(widget.prod.subtipo),
           controlAffinity: ListTileControlAffinity.trailing,
-          value: _check,
+          value: widget._check,
           onChanged: (bool value){
             setState(() {
-              _check = value;
+              widget._check = value;
             });
           },
         ),
