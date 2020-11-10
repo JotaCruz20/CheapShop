@@ -40,7 +40,7 @@ class _ProdListSate extends State<ProdList> {
             return Container();
           }
           else {
-            dynamic tile = ProdTile(prod: prods[index],inFinalList: false);
+            dynamic tile = ProdTile(prod: prods[index]);
             doneHash.addAll({add:tile});
             widget.prodsF.add(tile);
             return tile;
