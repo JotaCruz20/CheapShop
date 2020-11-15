@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'package:app/screens/lista/listaFinal.dart';
 import 'package:flutter/material.dart';
 import 'package:app/models/produto.dart';
 import 'package:app/screens/lista/list_tile.dart';
@@ -25,7 +26,7 @@ class _ListaAtualState extends State<ListaAtual> {
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: (){
-              Navigator.pop(context,{'list': prodsAtuais});
+              Navigator.pop(context,{'nome': "Lista Inacabada",'prods':prodsAtuais,'loja':"Lista Inacabada"});
             },
           ),
         ),
@@ -96,15 +97,20 @@ class _ListaAtualState extends State<ListaAtual> {
                     if (flag) {
                       flag = false;
                       menor = value;
+                      menorLoja = key;
                     }
                     if (value < menor) {
                       menor = value;
                       menorLoja = key;
                     }
                   });
-                  print(menorLoja);
                 }
               });
+              print(menorLoja);
+              dynamic result = await Navigator.push(context, MaterialPageRoute(
+                builder: (context)=>ListaFinal(listaProds: prodsAtuais,loja:menorLoja,preco: menor),
+                  ));
+              Navigator.pop(context,{'nome': result['nome'],'prods':result['prods'],'loja':result['loja'],'preco':result['preco']});
               },
             ),
             SizedBox(width: 20),

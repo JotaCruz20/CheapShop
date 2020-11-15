@@ -18,4 +18,8 @@ class Produto{
     this.qntidade = qntidade;
   }
 
+  void setHashMap(HashMap hash){
+    this.lojaPreco = hash;
+  }
+
 }

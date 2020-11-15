@@ -2,6 +2,7 @@ import 'package:app/models/user.dart';
 import 'package:app/screens/home/home.dart';
 import 'package:app/screens/lista/listProds.dart';
 import 'package:app/screens/lista/listaAtual.dart';
+import 'package:app/screens/lista/listaFinal.dart';
 import 'package:app/screens/wrapper.dart';
 import 'package:app/services/auth.dart';
 import 'package:flutter/material.dart';
@@ -18,12 +19,12 @@ class MyApp extends StatelessWidget {
     return StreamProvider<User>.value(
       value: AuthService().user,
       child: MaterialApp(
-        initialRoute: '/',
         routes: {
           '/' :(context) => Wrapper(),
           '/home': (context) => Home(),
           '/newlist': (context) => ListaAtual(),
           '/list': (context) => ListaProds(),
+          '/listFinal': (context) => ListaFinal(),
         },
       ),
     );
