@@ -153,10 +153,10 @@ class _ProdListSate extends State<ProdList> {
           itemBuilder: (context, index) {
             bool flag;
             if (widget.search == "" && widget.checked.length == 0) {
-              String add = "${prods[index].tipo} ${prods[index].subtipo}";
+              String add = "${widget.prodsF[index].prod.tipo} ${widget.prodsF[index].prod.subtipo}";
               if (doneHash.containsKey(add)) {
                 doneHash[add].atulizarProd(
-                    prods[index].loja, prods[index].preco);
+                    widget.prodsF[index].prod.loja, widget.prodsF[index].prod.preco);
                 return Container();
               }
               else {
@@ -164,17 +164,17 @@ class _ProdListSate extends State<ProdList> {
               }
             }
             else if (widget.search == "" && widget.checked.length != 0) {
-              String add = "${prods[index].tipo} ${prods[index].subtipo}";
+              String add = "${widget.prodsF[index].prod.tipo} ${widget.prodsF[index].prod.subtipo}";
               if (doneHash.containsKey(add)) {
                 doneHash[add].atulizarProd(
-                    prods[index].loja, prods[index].preco);
+                    widget.prodsF[index].prod.loja, widget.prodsF[index].prod.preco);
                 return Container();
               }
               else {
                 flag = false;
                 widget.checked.forEach((element) {
-                  if (element.prod.tipo == prods[index].tipo &&
-                      element.prod.subtipo == prods[index].subtipo) {
+                  if (element.prod.tipo == widget.prodsF[index].prod.tipo &&
+                      element.prod.subtipo == widget.prodsF[index].prod.subtipo) {
                     flag = true;
                   }
                 });
@@ -184,16 +184,16 @@ class _ProdListSate extends State<ProdList> {
               }
             }
             else if (widget.search != "" && widget.checked.length == 0) {
-              String add = "${prods[index].tipo} ${prods[index].subtipo}";
+              String add = "${widget.prodsF[index].prod.tipo} ${widget.prodsF[index].prod.subtipo}";
               if (doneHash.containsKey(add)) {
                 doneHash[add].atulizarProd(
-                    prods[index].loja, prods[index].preco);
+                    widget.prodsF[index].prod.loja, widget.prodsF[index].prod.preco);
                 return Container();
               }
               else {
-                if (prods[index].tipo.toLowerCase().contains(
+                if (widget.prodsF[index].prod.tipo.toLowerCase().contains(
                     widget.search.toLowerCase()) ||
-                    prods[index].subtipo.toLowerCase().contains(
+                    widget.prodsF[index].prod.subtipo.toLowerCase().contains(
                         widget.search.toLowerCase())) {
                   return widget.prodsF[index];
                 }
@@ -202,21 +202,21 @@ class _ProdListSate extends State<ProdList> {
               }
             }
             else {
-              String add = "${prods[index].tipo} ${prods[index].subtipo}";
+              String add = "${widget.prodsF[index].prod.tipo} ${widget.prodsF[index].prod.subtipo}";
               if (doneHash.containsKey(add)) {
                 doneHash[add].atulizarProd(
-                    prods[index].loja, prods[index].preco);
+                    widget.prodsF[index].prod.loja,widget.prodsF[index].prod.preco);
                 return Container();
               }
               else {
-                if (prods[index].tipo.toLowerCase().contains(
+                if (widget.prodsF[index].prod.tipo.toLowerCase().contains(
                     widget.search.toLowerCase()) ||
-                    prods[index].subtipo.toLowerCase().contains(
+                    widget.prodsF[index].prod.subtipo.toLowerCase().contains(
                         widget.search.toLowerCase())) {
                   flag = false;
                   widget.checked.forEach((element) {
-                    if (element.prod.tipo == prods[index].tipo &&
-                        element.prod.subtipo == prods[index].subtipo &&
+                    if (element.prod.tipo == widget.prodsF[index].prod.tipo &&
+                        element.prod.subtipo == widget.prodsF[index].prod.subtipo &&
                         flag == false) {
                       flag = true;
                     }
