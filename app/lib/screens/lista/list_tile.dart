@@ -14,6 +14,10 @@ class ProdTile extends StatefulWidget {
     return _check;
   }
 
+  void setCheck(bool check){
+    this._check=check;
+  }
+
   Produto getProduto(){
     return prod;
   }

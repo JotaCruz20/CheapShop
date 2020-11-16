@@ -5,6 +5,7 @@ class Produto{
   final String subtipo;
   final double preco;
   final String loja;
+  bool selecionado=false;
   double qntidade;
   HashMap lojaPreco = new HashMap();
 

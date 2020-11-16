@@ -13,10 +13,11 @@ class ListaProds extends StatefulWidget {
 class _ListaProdsState extends State<ListaProds> {
   Icon actionIcon = new Icon(Icons.search);
   Widget appBarTitle = new Text("Lista de Produtos Disponiveis");
+  dynamic storeList=ProdList("",[]);
+  dynamic listaSelecionados = [];
   @override
 
   Widget build(BuildContext context) {
-    dynamic storeList;
 
     return StreamProvider<List<Produto>>.value(
       value: DatabaseService().prods,
@@ -41,6 +42,12 @@ class _ListaProdsState extends State<ListaProds> {
                         hintText: "Search...",
                         hintStyle: new TextStyle(color: Colors.white)
                     ),
+                    onChanged: (string){
+                      setState(() {
+                        listaSelecionados=storeList.getProdsChecked();
+                        storeList=ProdList(string,listaSelecionados);
+                      });
+                    },
                   );
                 }
                 else {
@@ -51,7 +58,7 @@ class _ListaProdsState extends State<ListaProds> {
             }),
             ],
         ),
-        body: storeList=ProdList(),
+        body: storeList,
         floatingActionButton: FloatingActionButton(
             child: Icon(Icons.done,color:Colors.white),
             backgroundColor: Colors.green[400],
