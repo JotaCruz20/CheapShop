@@ -13,7 +13,7 @@ class ListaProds extends StatefulWidget {
 class _ListaProdsState extends State<ListaProds> {
   Icon actionIcon = new Icon(Icons.search);
   Widget appBarTitle = new Text("Lista de Produtos Disponiveis");
-  dynamic storeList=ProdList("",[]);
+  ProdList storeList=ProdList("",[]);
   dynamic listaSelecionados = [];
   @override
 
@@ -31,6 +31,8 @@ class _ListaProdsState extends State<ListaProds> {
             new IconButton(icon: actionIcon,
             onPressed:(){
               setState(() {
+                listaSelecionados=storeList.saveProdsChecked();
+                storeList.setProdsF(listaSelecionados);
                 if ( this.actionIcon.icon == Icons.search){
                   this.actionIcon = new Icon(Icons.close);
                   this.appBarTitle = new TextField(
@@ -44,8 +46,7 @@ class _ListaProdsState extends State<ListaProds> {
                     ),
                     onChanged: (string){
                       setState(() {
-                        listaSelecionados=storeList.getProdsChecked();
-                        storeList=ProdList(string,listaSelecionados);
+                        storeList.setSearch(string);
                       });
                     },
                   );
