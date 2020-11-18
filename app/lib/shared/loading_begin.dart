@@ -18,6 +18,10 @@ class _LoadingBeginState extends State<LoadingBegin> {
     await widget.storage.readCounter().then((value) {
       listasFinal = value;
     });
+    Navigator.pushReplacementNamed(context, "/wrapper", arguments: {
+      "storage": widget.storage,
+      "listasFinal": listasFinal,
+    });
   }
 
   @override
@@ -26,12 +30,6 @@ class _LoadingBeginState extends State<LoadingBegin> {
     //função que faz load das cenas
     getListasFinal();
     //----------------------------------
-    Future.delayed(Duration(seconds:5), () {
-      Navigator.pushReplacementNamed(context, "/wrapper", arguments: {
-        "storage": widget.storage,
-        "listasFinal": listasFinal,
-      });
-    });
   }
 
   @override
@@ -39,7 +37,7 @@ class _LoadingBeginState extends State<LoadingBegin> {
     return Container(
       color: Colors.brown[100],
       child: Center(
-        child: SpinKitChasingDots(
+        child: SpinKitWave(
           color: Colors.brown,
           size: 50.0,
         ),

@@ -7,7 +7,7 @@ class LoadingPage extends StatelessWidget {
     return Container(
       color: Colors.brown[100],
       child: Center(
-        child: SpinKitChasingDots(
+        child: SpinKitWave(
           color: Colors.brown,
           size: 50.0,
         ),

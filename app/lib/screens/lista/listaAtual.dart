@@ -1,5 +1,6 @@
 import 'dart:collection';
 import 'package:app/screens/lista/listaFinal.dart';
+import 'package:app/shared/loading_next_page.dart';
 import 'package:flutter/material.dart';
 import 'package:app/models/produto.dart';
 import 'package:app/screens/lista/list_tile.dart';
@@ -20,10 +21,11 @@ class _ListaAtualState extends State<ListaAtual> {
   String menorLoja='';
   bool flag = true;
   final _formKey = GlobalKey<FormState>();
+  bool loading = false;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return loading ? LoadingPage() : Scaffold(
         appBar: AppBar(
           title: Text('Sua Lista'),
           backgroundColor: Colors.brown[400],
@@ -96,6 +98,9 @@ class _ListaAtualState extends State<ListaAtual> {
             child: Icon(Icons.done,color:Colors.white),
             backgroundColor: Colors.green[400],
             onPressed: () async {
+                setState(() {
+                  loading=true;
+                });
                 if(widget.prodsAtuais.length==0){
                   return showDialog(
                       context: context,
@@ -180,12 +185,18 @@ class _ListaAtualState extends State<ListaAtual> {
                     });
                   }
                 }
+                setState(() {
+                  loading=false;
+                });
             }),
             SizedBox(width: 20),
             FloatingActionButton(
               heroTag: "btn2",
               child: Icon(Icons.add_shopping_cart),
               onPressed: () async{
+                setState(() {
+                  loading=true;
+                });
                 dynamic result = await Navigator.pushNamed(context, '/list');
                 setState(() {
                   for(var i=0;i<result['list'].length;i++) {
@@ -193,6 +204,7 @@ class _ListaAtualState extends State<ListaAtual> {
                     prod.setChecked(false);
                     widget.prodsAtuais.add(prod);
                   }
+                  loading=false;
                 });
               },
             ),
