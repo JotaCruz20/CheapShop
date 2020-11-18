@@ -60,12 +60,6 @@ class _HomeState extends State<Home>  {
               return  widget.storage.writeCounter(listasFinal);
             },
           ),
-          FlatButton.icon(
-              icon: Icon(Icons.settings),
-              label: Text('settings'),
-              onPressed: (){
-              }
-          )
         ],
       ),
       body: ListView.builder(

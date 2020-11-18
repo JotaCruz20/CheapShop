@@ -95,51 +95,90 @@ class _ListaAtualState extends State<ListaAtual> {
             child: Icon(Icons.done,color:Colors.white),
             backgroundColor: Colors.green[400],
             onPressed: () async {
-              if (_formKey.currentState.validate()) {
-                setState(() {
-                  _formKey.currentState.reset();
-                  //calcula
-                  widget.prodsAtuais.forEach((element) {
-                    element.lojaPreco.forEach((key, value) {
-                      if (widget.precoTot.containsKey(key)) {
-                        widget.precoTot.update(key, (val) =>
-                        value.toDouble() * element.qntidade + val.toDouble());
+                if(widget.prodsAtuais.length==0){
+                  return showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                            title: Text('Lista sem Itens!'),
+                          content: SingleChildScrollView(
+                            child: ListBody(
+                              children: <Widget>[
+                                Text('Lista sem itens.'),
+                                Text('Adicione itens para poder continuar'),
+                              ],
+                            ),
+                          ),
+                          actions: <Widget>[
+                            TextButton(
+                              child: Text('Ok'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        );
                       }
-                      else {
-                        widget.precoTot.addAll(
-                            { key: value.toDouble() * element.qntidade});
-                      }
-                    });
-                    if (widget.precoTot.containsKey(element.loja)) {
-                      widget.precoTot.update(element.loja, (value) =>
-                      value.toDouble() +
-                          element.preco.toDouble() * element.qntidade);
-                    }
-                    else {
-                      widget.precoTot.addAll({
-                        element.loja: element.preco.toDouble() *
-                            element.qntidade
+                  );
+                }
+                else {
+                  if (_formKey.currentState.validate()) {
+                    setState(() {
+                      _formKey.currentState.reset();
+                      //calcula
+                      widget.prodsAtuais.forEach((element) {
+                        element.lojaPreco.forEach((key, value) {
+                          if (widget.precoTot.containsKey(key)) {
+                            widget.precoTot.update(key, (val) =>
+                            value.toDouble() * element.qntidade +
+                                val.toDouble());
+                          }
+                          else {
+                            widget.precoTot.addAll(
+                                { key: value.toDouble() * element.qntidade});
+                          }
+                        });
+                        if (widget.precoTot.containsKey(element.loja)) {
+                          widget.precoTot.update(element.loja, (value) =>
+                          value.toDouble() +
+                              element.preco.toDouble() * element.qntidade);
+                        }
+                        else {
+                          widget.precoTot.addAll({
+                            element.loja: element.preco.toDouble() *
+                                element.qntidade
+                          });
+                        }
                       });
-                    }
-                  });
-                  //**menor
-                  widget.precoTot.forEach((key, value) {
-                    if (flag) {
-                      flag = false;
-                      menor = value;
-                      menorLoja = key;
-                    }
-                    if (value < menor) {
-                      menor = value;
-                      menorLoja = key;
-                    }
-                  });
-                });
-                dynamic result = await Navigator.push(context, MaterialPageRoute(
-                  builder: (context)=>ListaFinal(listaProds: widget.prodsAtuais,loja:menorLoja,preco: menor),
-                ));
-                Navigator.pop(context,{'nome': result['nome'],'prods':result['prods'],'loja':result['loja'],'preco':result['preco']});
-              }
+                      //**menor
+                      widget.precoTot.forEach((key, value) {
+                        if (flag) {
+                          flag = false;
+                          menor = value;
+                          menorLoja = key;
+                        }
+                        if (value < menor) {
+                          menor = value;
+                          menorLoja = key;
+                        }
+                      });
+                    });
+                    dynamic result = await Navigator.push(
+                        context, MaterialPageRoute(
+                      builder: (context) => ListaFinal(
+                          listaProds: widget.prodsAtuais,
+                          loja: menorLoja,
+                          preco: menor),
+                    ));
+                    Navigator.pop(context, {
+                      'nome': result['nome'],
+                      'prods': result['prods'],
+                      'loja': result['loja'],
+                      'preco': result['preco']
+                    });
+                  }
+                }
             }),
             SizedBox(width: 20),
             FloatingActionButton(
