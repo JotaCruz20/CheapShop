@@ -6,6 +6,7 @@ class ProdTileF extends StatefulWidget {
   bool check=false;
   ProdTileF({this.prod});
   ProdTileF.C({this.prod,this.check});
+  TextDecoration decor = null;
 
   void atulizarProd(String loja, double preco){
     prod.addLoja(loja, preco);
@@ -29,6 +30,7 @@ class ProdTileF extends StatefulWidget {
 
 class _ProdTileF extends State<ProdTileF> {
 
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -40,7 +42,10 @@ class _ProdTileF extends State<ProdTileF> {
             radius: 25,
             backgroundColor: Colors.brown[200],
           ),
-          title: Text("${widget.prod.tipo}: ${widget.prod.qntidade} unidades/kgs"),
+          title: Text("${widget.prod.tipo}: ${widget.prod.qntidade} unidades/kgs",
+          style: TextStyle(
+            decoration: widget.decor,
+          ),),
           subtitle: Text(widget.prod.subtipo),
           controlAffinity: ListTileControlAffinity.trailing,
           value: widget.check,
@@ -48,6 +53,12 @@ class _ProdTileF extends State<ProdTileF> {
             setState(() {
               widget.check = value;
               widget.prod.checked = value;
+              if(value==true){
+                widget.decor = TextDecoration.lineThrough;
+              }
+              else{
+                widget.decor = null;
+              }
             });
           },
         ),

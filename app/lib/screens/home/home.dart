@@ -73,18 +73,51 @@ class _HomeState extends State<Home>  {
                   title: Text(listasFinal[index].nome),
                   subtitle: Text(listasFinal[index].loja),
                   onTap: (() async{
-                    ListaFinal f= ListaFinal(preco: listasFinal[index].preco,listaProds: listasFinal[index].listaProds,loja:listasFinal[index].loja);
-                    f.setNome(listasFinal[index].nome);
-                    dynamic result = await Navigator.push(context, MaterialPageRoute(
-                      builder: (context)=>f,
-                    ));
-                    setState((){
-                        f=  ListaFinal(preco: result['preco'],listaProds: result['prods'],loja:result['loja']);
+                    if(listasFinal[index].loja=="Lista Inacabada"){
+                      return showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text('Lista Inacabada!'),
+                              content: SingleChildScrollView(
+                                child: ListBody(
+                                  children: <Widget>[
+                                    Text('Tem de Acabar a lista para poder continuar.'),
+                                  ],
+                                ),
+                              ),
+                              actions: <Widget>[
+                                TextButton(
+                                  child: Text('Ok'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            );
+                          }
+                      );
+                    }
+                    else {
+                      ListaFinal f = ListaFinal(preco: listasFinal[index].preco,
+                          listaProds: listasFinal[index].listaProds,
+                          loja: listasFinal[index].loja);
+                      f.setNome(listasFinal[index].nome);
+                      dynamic result = await Navigator.push(
+                          context, MaterialPageRoute(
+                        builder: (context) => f,
+                      ));
+                      setState(() {
+                        f = ListaFinal(preco: result['preco'],
+                            listaProds: result['prods'],
+                            loja: result['loja']);
                         f.setNome(result['nome']);
                         listasFinal.removeAt(index);
                         listasFinal.insert(index, f);
-                    });
-                    return  widget.storage.writeCounter(listasFinal);
+                      });
+                      return widget.storage.writeCounter(listasFinal);
+                    }
                   }),
                   trailing: Container(
                     width: 150,

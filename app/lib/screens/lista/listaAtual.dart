@@ -62,6 +62,7 @@ class _ListaAtualState extends State<ListaAtual> {
                               child: TextFormField(
                                   decoration: InputDecoration(labelText: "Insira Quantidade Ou Kgs"),
                                   validator: (val)=>double.parse(val, (e) => null) == null ? 'Insira um numero' : null,
+                                  initialValue: "${widget.prodsAtuais[index].qntidade}",
                                   onChanged: (val){
                                     setState(() => widget.prodsAtuais[index].qntidade= double.parse(val));
                                   },

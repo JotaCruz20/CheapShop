@@ -5,7 +5,7 @@ class Produto{
   final String subtipo;
   final double preco;
   final String loja;
-  double qntidade;
+  double qntidade=0;
   bool checked=false;
   HashMap lojaPreco = new HashMap();
 

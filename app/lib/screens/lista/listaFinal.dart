@@ -68,7 +68,8 @@ class _ListaFinalState extends State<ListaFinal> {
                       ),
                     ),
                   SizedBox(height: 10),
-                  Text("A loja mais barata é\n      ${widget.loja}.\n     Total de ${widget.preco}€ *",
+                  Text("A loja mais barata é:\n${widget.loja}\nTotal de ${widget.preco}€ *",
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                     color:Colors.green[500],
                     fontSize: 30,
@@ -88,7 +89,7 @@ class _ListaFinalState extends State<ListaFinal> {
                     ),
                   ),
                   SizedBox(height: 10),
-                  Text("* O preço é calculado com base em preços online pode haver algumas divergencias",
+                  Text("* O preço é calculado com base em preços online pode haver algumas divergências",
                   style: TextStyle(
                     color:Colors.green[300],
                     fontSize: 15,
