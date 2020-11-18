@@ -1,8 +1,17 @@
+import 'package:app/screens/home/LocalStorage.dart';
+import 'package:app/screens/lista/listaFinal.dart';
 import 'package:flutter/material.dart';
 import 'package:app/screens/home/home.dart';
 import 'package:app/services/auth.dart';
 
 class Authenticate extends StatefulWidget {
+  LocalStorage storage;
+  List<ListaFinal> listasFinal= [];
+
+  Home(LocalStorage storage,List<ListaFinal> listasFinal){
+    this.storage=storage;
+    this.listasFinal=listasFinal;
+  }
   @override
   _AuthenticateState createState() => _AuthenticateState();
 }
@@ -24,7 +33,7 @@ class _AuthenticateState extends State<Authenticate> {
       }
       else {
         print("LoggedIn");
-        return Home();
+        return Home(widget.storage,widget.listasFinal);
       }
   }
 }

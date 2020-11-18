@@ -5,6 +5,7 @@ import 'package:app/screens/lista/listaAtual.dart';
 import 'package:app/screens/lista/listaFinal.dart';
 import 'package:app/screens/wrapper.dart';
 import 'package:app/services/auth.dart';
+import 'package:app/shared/loading_begin.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -20,8 +21,8 @@ class MyApp extends StatelessWidget {
       value: AuthService().user,
       child: MaterialApp(
         routes: {
-          '/' :(context) => Wrapper(),
-          '/home': (context) => Home(),
+          '/' :(context) => LoadingBegin(),
+          '/wrapper' :(context) => Wrapper(),
           '/newlist': (context) => ListaAtual(),
           '/list': (context) => ListaProds(),
           '/listFinal': (context) => ListaFinal(),

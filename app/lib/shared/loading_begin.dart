@@ -4,30 +4,19 @@ import 'package:app/screens/lista/listaFinal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-class LoadingPage extends StatefulWidget {
+class LoadingBegin extends StatefulWidget {
   final LocalStorage storage = new LocalStorage();
 
   @override
-  _LoadingPageState createState() => _LoadingPageState();
+  _LoadingBeginState createState() => _LoadingBeginState();
 }
 
-class _LoadingPageState extends State<LoadingPage> {
-  List<ListaFinal> listasFinal= [];
+class _LoadingBeginState extends State<LoadingBegin> {
+  List<ListaFinal> listasFinal = [];
 
-  void getListasFinal(){
-    widget.storage.readCounter().then((value) {
-      setState(() {
-        listasFinal = value;
-      });
-      setState(() {
-        if(listasFinal==[]){
-          List<Produto> prodTest = [];
-          Produto test = Produto(tipo: "Tipo do Produto", subtipo: "Subtipo do Produto",preco: 0.0,loja: 'Loja');
-          prodTest.add(test);
-          ListaFinal teste=ListaFinal(loja:"Tutorial",preco: 0,listaProds: prodTest);
-          listasFinal.add(teste);
-        }
-      });
+  Future<void> getListasFinal() async {
+    await widget.storage.readCounter().then((value) {
+      listasFinal = value;
     });
   }
 
@@ -37,11 +26,14 @@ class _LoadingPageState extends State<LoadingPage> {
     //função que faz load das cenas
     getListasFinal();
     //----------------------------------
-    Navigator.pushReplacementNamed(context, "/wrapper",arguments: {
-      "storage": widget.storage,
-      "listasFinal": listasFinal,
+    Future.delayed(Duration(seconds:5), () {
+      Navigator.pushReplacementNamed(context, "/wrapper", arguments: {
+        "storage": widget.storage,
+        "listasFinal": listasFinal,
+      });
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(

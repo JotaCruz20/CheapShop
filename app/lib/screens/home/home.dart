@@ -7,37 +7,30 @@ import 'package:flutter/material.dart';
 
 
 class Home extends StatefulWidget {
-  final LocalStorage storage = new LocalStorage();
+  LocalStorage storage;
+  List<ListaFinal> listasFinal= [];
+
+  Home(LocalStorage storage,List<ListaFinal> listasFinal){
+    this.storage=storage;
+    this.listasFinal=listasFinal;
+  }
 
   @override
   _HomeState createState() => _HomeState();
 }
 
 class _HomeState extends State<Home>  {
-  List<ListaFinal> listasFinal= [];
+  List<ListaFinal> listasFinal;
 
   @override
 
   void initState() {
     super.initState();
-    widget.storage.readCounter().then((value) {
-      setState(() {
-        listasFinal = value;
-      });
-      setState(() {
-        if(listasFinal==[]){
-          List<Produto> prodTest = [];
-          Produto test = Produto(tipo: "Tipo do Produto", subtipo: "Subtipo do Produto",preco: 0.0,loja: 'Loja');
-          prodTest.add(test);
-          ListaFinal teste=ListaFinal(loja:"Tutorial",preco: 0,listaProds: prodTest);
-          listasFinal.add(teste);
-        }
-      });
-    });
   }
 
 
   Widget build(BuildContext context) {
+    listasFinal= widget.listasFinal;
     return Scaffold(
       backgroundColor:  Colors.brown[50],
       appBar: AppBar(
