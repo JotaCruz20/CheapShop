@@ -6,10 +6,14 @@ class Produto{
   final double preco;
   final String loja;
   double qntidade;
+  bool checked=false;
   HashMap lojaPreco = new HashMap();
 
   Produto({this.tipo,this.subtipo,this.preco,this.loja});
 
+  void setChecked(bool check){
+    this.checked=check;
+  }
   void addLoja(String loja,double preco){
     lojaPreco.addAll({loja:preco});
   }

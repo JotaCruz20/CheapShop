@@ -39,6 +39,12 @@ dev_dependencies:
   flutter_spinkit: "^4.1.2"
   flappy_search_bar: 1.4.1
   path_provider: ^1.6.24
+  flutter_launcher_icons: ^0.8.1
+
+
+flutter_icons:
+  android: true
+  image_path: "assets/icon/icon.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

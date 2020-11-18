@@ -5,17 +5,22 @@ import 'package:app/models/produto.dart';
 import 'package:app/screens/lista/list_tile.dart';
 
 class ListaAtual extends StatefulWidget {
+  List<Produto> prodsAtuais =[];
+  HashMap precoTot = new HashMap();
+
+  ListaAtual({this.prodsAtuais});
+
   @override
   _ListaAtualState createState() => _ListaAtualState();
 }
 
 class _ListaAtualState extends State<ListaAtual> {
-  List<Produto> prodsAtuais =[];
-  HashMap precoTot = new HashMap();
+
   double menor = 0;
   String menorLoja='';
   bool flag = true;
   final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,14 +31,14 @@ class _ListaAtualState extends State<ListaAtual> {
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: (){
-              Navigator.pop(context,{'nome': "Lista Inacabada",'prods':prodsAtuais,'loja':"Lista Inacabada"});
+              Navigator.pop(context,{'nome': "Lista Inacabada",'prods':widget.prodsAtuais,'loja':"Lista Inacabada"});
             },
           ),
         ),
       body: Form(
           key: _formKey,
           child:ListView.builder(
-          itemCount: prodsAtuais.length,
+          itemCount: widget.prodsAtuais.length,
           itemBuilder: (context, index) {
                 return Padding(
                   padding: EdgeInsets.only(top: 8.0),
@@ -49,7 +54,7 @@ class _ListaAtualState extends State<ListaAtual> {
                           children: <Widget>[
                             Container(
                               width: 60,
-                              child: Text("${prodsAtuais[index].tipo}:\n${prodsAtuais[index].subtipo}"),
+                              child: Text("${widget.prodsAtuais[index].tipo}:\n${widget.prodsAtuais[index].subtipo}"),
                             ),
                             SizedBox(width: 0),
                             Container(
@@ -58,7 +63,7 @@ class _ListaAtualState extends State<ListaAtual> {
                                   decoration: InputDecoration(labelText: "Insira Quantidade Ou Kgs"),
                                   validator: (val)=>double.parse(val, (e) => null) == null ? 'Insira um numero' : null,
                                   onChanged: (val){
-                                    setState(() => prodsAtuais[index].qntidade= double.parse(val));
+                                    setState(() => widget.prodsAtuais[index].qntidade= double.parse(val));
                                   },
                                 ),
                               ),
@@ -69,7 +74,7 @@ class _ListaAtualState extends State<ListaAtual> {
                                 color: Colors.red,
                                 onPressed:(){
                                   setState(() {
-                                    prodsAtuais.removeAt(index);
+                                    widget.prodsAtuais.removeAt(index);
                                   });
                                 },
                               ),
@@ -89,11 +94,36 @@ class _ListaAtualState extends State<ListaAtual> {
               heroTag: "btn1",
             child: Icon(Icons.done,color:Colors.white),
             backgroundColor: Colors.green[400],
-            onPressed: () async{
-              setState(() {
-                if(_formKey.currentState.validate()) {
+            onPressed: () async {
+              if (_formKey.currentState.validate()) {
+                setState(() {
                   _formKey.currentState.reset();
-                  precoTot.forEach((key, value) {
+                  //calcula
+                  widget.prodsAtuais.forEach((element) {
+                    element.lojaPreco.forEach((key, value) {
+                      if (widget.precoTot.containsKey(key)) {
+                        widget.precoTot.update(key, (val) =>
+                        value.toDouble() * element.qntidade + val.toDouble());
+                      }
+                      else {
+                        widget.precoTot.addAll(
+                            { key: value.toDouble() * element.qntidade});
+                      }
+                    });
+                    if (widget.precoTot.containsKey(element.loja)) {
+                      widget.precoTot.update(element.loja, (value) =>
+                      value.toDouble() +
+                          element.preco.toDouble() * element.qntidade);
+                    }
+                    else {
+                      widget.precoTot.addAll({
+                        element.loja: element.preco.toDouble() *
+                            element.qntidade
+                      });
+                    }
+                  });
+                  //**menor
+                  widget.precoTot.forEach((key, value) {
                     if (flag) {
                       flag = false;
                       menor = value;
@@ -104,15 +134,13 @@ class _ListaAtualState extends State<ListaAtual> {
                       menorLoja = key;
                     }
                   });
-                }
-              });
-              print(menorLoja);
-              dynamic result = await Navigator.push(context, MaterialPageRoute(
-                builder: (context)=>ListaFinal(listaProds: prodsAtuais,loja:menorLoja,preco: menor),
-                  ));
-              Navigator.pop(context,{'nome': result['nome'],'prods':result['prods'],'loja':result['loja'],'preco':result['preco']});
-              },
-            ),
+                });
+                dynamic result = await Navigator.push(context, MaterialPageRoute(
+                  builder: (context)=>ListaFinal(listaProds: widget.prodsAtuais,loja:menorLoja,preco: menor),
+                ));
+                Navigator.pop(context,{'nome': result['nome'],'prods':result['prods'],'loja':result['loja'],'preco':result['preco']});
+              }
+            }),
             SizedBox(width: 20),
             FloatingActionButton(
               heroTag: "btn2",
@@ -122,26 +150,8 @@ class _ListaAtualState extends State<ListaAtual> {
                 setState(() {
                   for(var i=0;i<result['list'].length;i++) {
                     Produto prod = result['list'][i].getProduto();
-                    prodsAtuais.add(prod);
-                    prod.lojaPreco.forEach((key, value) {
-                      if (precoTot.containsKey(key)) {
-                        precoTot.update(key, (val) =>
-                        value.toDouble() + val.toDouble());
-                      }
-                      else {
-                        precoTot.addAll({ key: value.toDouble()});
-                      }
-                    });
-                    if (precoTot.containsKey(prod.loja)) {
-                      precoTot.update(
-                          prod.loja, (value) => value.toDouble() +
-                          prod.preco.toDouble());
-                    }
-                    else {
-                      precoTot.addAll({
-                        prod.loja: prod.preco.toDouble()
-                      });
-                    }
+                    prod.setChecked(false);
+                    widget.prodsAtuais.add(prod);
                   }
                 });
               },

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:app/models/produto.dart';
 
 import 'list_tile.dart';
+import 'list_tile_Final.dart';
 
 
 class ListaFinal extends StatefulWidget {
@@ -78,7 +79,7 @@ class _ListaFinalState extends State<ListaFinal> {
                       child: ListView.builder(
                       itemCount: widget.listaProds.length,
                       itemBuilder: (context, index) {
-                        dynamic tile = ProdTile(prod: widget.listaProds[index]);
+                        ProdTileF tile = ProdTileF.C(prod: widget.listaProds[index],check:widget.listaProds[index].checked);
                         return Padding(
                           padding: EdgeInsets.only(top: 8.0),
                           child: tile,

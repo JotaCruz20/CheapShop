@@ -27,6 +27,12 @@ class _ListaProdsState extends State<ListaProds> {
           title: appBarTitle,
           backgroundColor: Colors.brown[400],
           elevation: 0.0,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: (){
+              Navigator.pop(context,{'list': storeList.getProdsChecked()});
+            },
+          ),
           actions: <Widget>[
             new IconButton(icon: actionIcon,
             onPressed:(){

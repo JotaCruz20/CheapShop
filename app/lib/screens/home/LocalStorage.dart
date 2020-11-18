@@ -32,7 +32,7 @@ class LocalStorage{
       write+='${element.loja},${element.preco},${element.nome}';
       element.listaProds.forEach((prod) {
         write+='#';
-        write+='${prod.tipo},${prod.subtipo},${prod.preco},${prod.qntidade},${prod.loja}';
+        write+='${prod.tipo},${prod.subtipo},${prod.preco},${prod.qntidade},${prod.loja},${prod.checked}';
         write+='+';
         prod.lojaPreco.forEach((key, value) {
           write+='*';
@@ -47,8 +47,9 @@ class LocalStorage{
     try {
       List<ListaFinal> listasFinal=[];
       final file = await _localFile;
-      String nomeLista="",lojaList="",prodTipo="",prodSubTipo="",prodPreco="",prodQntd="",hashNome="",hashVal="",prodLoja="";
-      double precoLista;
+      String nomeLista="",lojaList="",prodTipo="",prodSubTipo="",prodPreco="",prodQntd="",hashNome="",prodLoja="";
+      double precoLista,hashVal;
+      bool checked;
 
       // Read the file.
       String data = await file.readAsString();
@@ -75,6 +76,7 @@ class LocalStorage{
                     prodPreco = prodSpecs2[2];
                     prodQntd = prodSpecs2[3];
                     prodLoja = prodSpecs2[4];
+                    checked = prodSpecs2[5].toLowerCase() == 'true';
                   }
                   else {
                     List<String> hash = ele2.split('*');
@@ -82,12 +84,13 @@ class LocalStorage{
                       if (ind != 0) {
                         List<String> hashDiv = ele3.split(':');
                         hashNome = hashDiv[0];
-                        hashVal = hashDiv[1];
+                        hashVal = double.parse(hashDiv[1]);
                         lojaPreco.addAll({hashNome: hashVal});
                       }
                     });
                     Produto produtoAux = new Produto(tipo: prodTipo, subtipo: prodSubTipo, preco: double.parse(prodPreco), loja: prodLoja);
                     produtoAux.setQntidade(double.parse(prodQntd));
+                    produtoAux.setChecked(checked);
                     produtoAux.setHashMap(lojaPreco);
                     prodsLista.add(produtoAux);
                   }

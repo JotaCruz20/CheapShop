@@ -1,6 +1,7 @@
 import 'package:app/models/produto.dart';
 import 'package:app/screens/home/LocalStorage.dart';
 import 'package:app/screens/lista/listProds.dart';
+import 'package:app/screens/lista/listaAtual.dart';
 import 'package:app/screens/lista/listaFinal.dart';
 import 'package:flutter/material.dart';
 
@@ -37,8 +38,6 @@ class _HomeState extends State<Home>  {
 
 
   Widget build(BuildContext context) {
-
-
     return Scaffold(
       backgroundColor:  Colors.brown[50],
       appBar: AppBar(
@@ -50,7 +49,9 @@ class _HomeState extends State<Home>  {
             icon: Icon(Icons.add),
             label: Text('Add list'),
             onPressed: () async{
-              dynamic result = await Navigator.pushNamed(context, '/newlist');
+              dynamic result = await Navigator.push(context, MaterialPageRoute(
+                builder: (context)=>ListaAtual(prodsAtuais: []),
+              ));
               ListaFinal list = ListaFinal(listaProds:result['prods'],loja:result['loja'],preco:result['preco']);
               list.setNome(result['nome']);
               setState(() {
@@ -80,10 +81,51 @@ class _HomeState extends State<Home>  {
                   onTap: (() async{
                     ListaFinal f= ListaFinal(preco: listasFinal[index].preco,listaProds: listasFinal[index].listaProds,loja:listasFinal[index].loja);
                     f.setNome(listasFinal[index].nome);
-                    await Navigator.push(context, MaterialPageRoute(
+                    dynamic result = await Navigator.push(context, MaterialPageRoute(
                       builder: (context)=>f,
                     ));
+                    setState((){
+                        f=  ListaFinal(preco: result['preco'],listaProds: result['prods'],loja:result['loja']);
+                        f.setNome(result['nome']);
+                        listasFinal.removeAt(index);
+                        listasFinal.insert(index, f);
+                    });
+                    return  widget.storage.writeCounter(listasFinal);
                   }),
+                  trailing: Container(
+                    width: 150,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        IconButton(
+                            icon: Icon(Icons.edit),
+                            color: Colors.orange[300],
+                            onPressed: () async{
+                              dynamic result = await Navigator.push(context, MaterialPageRoute(
+                                builder: (context)=>ListaAtual(prodsAtuais: listasFinal[index].listaProds),
+                              ));
+                              setState(() {
+                                ListaFinal f= ListaFinal(preco: result['preco'],listaProds: result['prods'],loja:result['loja']);
+                                f.setNome(result['nome']);
+                                listasFinal.removeAt(index);
+                                listasFinal.insert(index, f);
+                              });
+                              return  widget.storage.writeCounter(listasFinal);
+                            }
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.highlight_remove_rounded),
+                          color: Colors.red,
+                          onPressed: (){
+                            setState(() {
+                              listasFinal.removeAt(index);
+                            });
+                            return  widget.storage.writeCounter(listasFinal);
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
             );

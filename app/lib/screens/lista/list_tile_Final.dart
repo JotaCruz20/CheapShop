@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:app/models/produto.dart';
 
-class ProdTile extends StatefulWidget {
+class ProdTileF extends StatefulWidget {
   final Produto prod;
   bool check=false;
-  ProdTile({this.prod});
-  ProdTile.C({this.prod,this.check});
+  ProdTileF({this.prod});
+  ProdTileF.C({this.prod,this.check});
 
   void atulizarProd(String loja, double preco){
     prod.addLoja(loja, preco);
@@ -24,10 +24,10 @@ class ProdTile extends StatefulWidget {
   }
 
   @override
-  _ProdTile createState() => _ProdTile();
+  _ProdTileF createState() => _ProdTileF();
 }
 
-class _ProdTile extends State<ProdTile> {
+class _ProdTileF extends State<ProdTileF> {
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +40,7 @@ class _ProdTile extends State<ProdTile> {
             radius: 25,
             backgroundColor: Colors.brown[200],
           ),
-          title: Text("${widget.prod.tipo}"),
+          title: Text("${widget.prod.tipo}: ${widget.prod.qntidade} unidades/kgs"),
           subtitle: Text(widget.prod.subtipo),
           controlAffinity: ListTileControlAffinity.trailing,
           value: widget.check,
