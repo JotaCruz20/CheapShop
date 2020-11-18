@@ -34,6 +34,9 @@ class _ListaAtualState extends State<ListaAtual> {
             icon: Icon(Icons.arrow_back),
             onPressed: (){
               Navigator.pop(context,{'nome': "Lista Inacabada",'prods':widget.prodsAtuais,'loja':"Lista Inacabada"});
+              setState(() {
+                loading=false;
+              });
             },
           ),
         ),
@@ -121,6 +124,9 @@ class _ListaAtualState extends State<ListaAtual> {
                               child: Text('Ok'),
                               onPressed: () {
                                 Navigator.of(context).pop();
+                                setState(() {
+                                  loading = false;
+                                });
                               },
                             ),
                           ],
@@ -198,6 +204,9 @@ class _ListaAtualState extends State<ListaAtual> {
                   loading=true;
                 });
                 dynamic result = await Navigator.pushNamed(context, '/list');
+                setState(() {
+                  loading = false;
+                });
                 setState(() {
                   for(var i=0;i<result['list'].length;i++) {
                     Produto prod = result['list'][i].getProduto();
