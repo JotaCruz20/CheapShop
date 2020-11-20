@@ -15,6 +15,11 @@ class _LoadingBeginState extends State<LoadingBegin> {
   List<ListaFinal> listasFinal = [];
 
   Future<void> getListasFinal() async {
+    bool check = await widget.storage.firstTime();
+    if(check==false){
+      await Navigator.pushNamed(context, '/tut');
+      await widget.storage.writeFirstTime();
+    }
     await widget.storage.readCounter().then((value) {
       listasFinal = value;
     });

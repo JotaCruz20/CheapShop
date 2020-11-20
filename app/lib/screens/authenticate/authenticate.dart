@@ -8,7 +8,7 @@ class Authenticate extends StatefulWidget {
   LocalStorage storage;
   List<ListaFinal> listasFinal= [];
 
-  Home(LocalStorage storage,List<ListaFinal> listasFinal){
+  Authenticate(LocalStorage storage,List<ListaFinal> listasFinal){
     this.storage=storage;
     this.listasFinal=listasFinal;
   }

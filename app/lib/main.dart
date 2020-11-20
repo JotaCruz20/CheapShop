@@ -1,5 +1,6 @@
 import 'package:app/models/user.dart';
 import 'package:app/screens/home/home.dart';
+import 'package:app/screens/home/tutPage.dart';
 import 'package:app/screens/lista/listProds.dart';
 import 'package:app/screens/lista/listaAtual.dart';
 import 'package:app/screens/lista/listaFinal.dart';
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
           '/newlist': (context) => ListaAtual(),
           '/list': (context) => ListaProds(),
           '/listFinal': (context) => ListaFinal(),
+          '/tut':(context)=>OnBoardingPage(),
         },
       ),
     );

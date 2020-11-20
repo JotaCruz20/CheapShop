@@ -17,6 +17,37 @@ class LocalStorage{
     return File('$path/counter.txt');
   }
 
+  Future<File> get _localFileCheck async {
+    final path = await _localPath;
+    return File('$path/check.txt');
+  }
+
+  Future<bool> firstTime() async{
+    try {
+      final file = await _localFileCheck;
+
+      // Read the file.
+      String data = await file.readAsString();
+
+      if(data!=""){
+        return true;
+      }
+      else{
+        return false;
+      }
+
+    }
+    catch(e){
+      return false;
+    }
+  }
+
+  Future<File> writeFirstTime() async {
+    final file = await _localFileCheck;
+    return file.writeAsString('check');
+  }
+
+
   Future<File> clear() async {
     final file = await _localFile;
     return file.writeAsString('');

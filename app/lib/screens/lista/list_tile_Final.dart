@@ -5,7 +5,6 @@ class ProdTileF extends StatefulWidget {
   final Produto prod;
   bool check=false;
   ProdTileF({this.prod});
-  ProdTileF.C({this.prod,this.check});
   TextDecoration decor = null;
 
   void atulizarProd(String loja, double preco){
@@ -18,6 +17,12 @@ class ProdTileF extends StatefulWidget {
 
   void setCheck(bool check){
     this.check=check;
+    if(check==true){
+      this.decor = TextDecoration.lineThrough;
+    }
+    else{
+      this.decor = null;
+    }
   }
 
   Produto getProduto(){
