@@ -80,8 +80,9 @@ class _ListaFinalState extends State<ListaFinal> {
                       child: Text("A loja mais barata é:\n",
                       textAlign: TextAlign.center,
                       style: TextStyle(
+                        fontWeight: FontWeight.bold,
                         fontFamily: "Open Sans",
-                        color:Colors.green[500],
+                        color:Colors.black,
                         fontSize: 30,
                           ),
                       ),
@@ -93,7 +94,7 @@ class _ListaFinalState extends State<ListaFinal> {
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.green[600],
-                          fontSize: 50,
+                          fontSize: 53,
                           fontFamily: "BalooTamma2"
                         ),
                       ),
@@ -111,20 +112,23 @@ class _ListaFinalState extends State<ListaFinal> {
                         }
                       ),
                     ),
-                    SizedBox(height: 10),
-                    Text("Total de ${widget.preco}€ *",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.green[600],
-                          fontSize: 30,
-                          fontFamily: "BalooTamma2"
+                    SizedBox(
+                      height: 120,
+                      child: Text("Total de ${widget.preco}€ *",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.green[600],
+                            fontSize: 50,
+                            fontFamily: "BalooTamma2"
+                        ),
                       ),
                     ),
                     Text("* O preço é calculado com base em preços online pode haver algumas divergências",
                     style: TextStyle(
                       fontFamily: "Open Sans",
-                      color:Colors.green[300],
+                      fontWeight: FontWeight.bold,
+                      color:Colors.black,
                       fontSize: 15,
                     ),
                     )

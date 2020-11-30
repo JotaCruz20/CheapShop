@@ -1,4 +1,4 @@
-package com.tut.app
+package com.pgicheapshop.final_app
 
 import io.flutter.embedding.android.FlutterActivity
 
