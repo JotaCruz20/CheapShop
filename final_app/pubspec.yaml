@@ -41,6 +41,8 @@ dev_dependencies:
   path_provider: ^1.6.24
   flutter_launcher_icons: "^0.8.0"
   animated_walkthrough: ^0.0.1+1
+  in_app_review: ^1.0.4
+  shared_preferences: ^0.5.12+4
 
 
 flutter_icons:
