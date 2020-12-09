@@ -43,7 +43,8 @@ dev_dependencies:
   animated_walkthrough: ^0.0.1+1
   in_app_review: ^1.0.4
   shared_preferences: ^0.5.12+4
-
+  back_button_interceptor: ^4.4.0
+  responsive_flutter: ^0.0.4
 
 flutter_icons:
   android: true
